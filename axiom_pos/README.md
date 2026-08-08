@@ -28,4 +28,4 @@
 
 ## License
 
-LGPL-3
+AGPL-3 (required for compatibility with `odoo-pos-custom-branding`)

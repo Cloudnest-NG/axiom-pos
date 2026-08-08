@@ -36,7 +36,7 @@ Support: support@cloudnest.com.ng
     'maintainer': 'Axiom Cloudnest Ltd',
     'website': 'https://www.cloudnest.com.ng',
     'support': 'support@cloudnest.com.ng',
-    'license': 'LGPL-3',
+    'license': 'AGPL-3',
     # pos_hr: cashier is hr.employee; rights must be loaded on employees.
     # odoo-pos-custom-branding: provides pos.receipt XML designs for draft select.
     'depends': ['point_of_sale', 'pos_hr', 'odoo-pos-custom-branding'],
