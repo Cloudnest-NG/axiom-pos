@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="axiom_pos.ControlButtons" t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('control-buttons')]/button[hasclass('o_pricelist_button')]" position="before">
+            <button t-if="pos.axiomCashierHasDraftPrinting() and pos.get_order()?.lines?.length"
+                    t-att-class="buttonClass"
+                    t-on-click="clickPrintDraft">
+                <i class="fa fa-print me-1"/>Draft Bill
+            </button>
+        </xpath>
+    </t>
+
+</templates>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="axiom_pos.Navbar" t-inherit="point_of_sale.Navbar" t-inherit-mode="extension">
+        <xpath expr="//CashierName" position="before">
+            <button t-if="axiomCanShowHeaderPrint"
+                    class="btn btn-light btn-lg lh-lg axiom-header-print"
+                    t-on-click="axiomClickPrint"
+                    title="Print Order">
+                <i class="fa fa-fw fa-lg fa-print"/>
+            </button>
+        </xpath>
+    </t>
+
+</templates>

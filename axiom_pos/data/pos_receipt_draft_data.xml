@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="pos_receipt_draft_proforma" model="pos.receipt">
+        <field name="name">Draft / Pro Forma Receipt</field>
+        <field name="design_receipt"><![CDATA[
+<div class="pos-receipt axiom-draft-xml-receipt">
+    <div class="text-center fw-bolder" style="font-size: 1.2em;">DRAFT ORDER</div>
+    <div class="text-center" style="white-space: pre-line; margin: 0.5em 0;">
+This is a draft / pro forma receipt.
+It is not a valid tax invoice or final payment receipt.
+    </div>
+    <div class="text-center">================================</div>
+
+    <t t-if="props.companyName">
+        <div class="text-center fw-bolder"><t t-esc="props.companyName"/></div>
+    </t>
+    <t t-if="props.branchLabel">
+        <div class="text-center"><t t-esc="props.branchLabel"/></div>
+    </t>
+    <t t-if="props.companyPhone">
+        <div class="text-center"><t t-esc="props.companyPhone"/></div>
+    </t>
+
+    <div class="text-center">================================</div>
+
+    <div>
+        <div>Cashier: <t t-esc="props.createdBy"/></div>
+        <t t-if="props.showCustomer">
+            <div>Customer: <t t-esc="props.partnerName"/>
+                <t t-if="props.partnerPhone"> (<t t-esc="props.partnerPhone"/>)</t>
+            </div>
+        </t>
+        <div>Receipt No: <t t-esc="props.data.name"/></div>
+        <div>Order Time: <t t-esc="props.data.date"/></div>
+        <div>Printed at: <t t-esc="props.printedAt"/></div>
+    </div>
+
+    <div class="text-center">================================</div>
+
+    <table style="width: 100%;">
+        <thead>
+            <tr>
+                <th style="text-align: left;">Qty</th>
+                <th style="text-align: left;">Name</th>
+                <th style="text-align: right;">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <t t-if="props.data.orderlines and props.data.orderlines.length">
+                <tr t-foreach="props.data.orderlines" t-as="line" t-key="line_index">
+                    <td>x<t t-esc="line.qty"/></td>
+                    <td>
+                        <t t-esc="line.productName"/>
+                        <t t-if="line.customerNote">
+                            <div><t t-esc="line.customerNote"/></div>
+                        </t>
+                    </td>
+                    <td style="text-align: right;"><t t-esc="line.price"/></td>
+                </tr>
+            </t>
+        </tbody>
+    </table>
+
+    <div class="text-center">================================</div>
+
+    <t t-set="taxTotals" t-value="props.data.taxTotals"/>
+    <t t-if="taxTotals">
+        <div class="d-flex">
+            <span>TOTAL</span>
+            <span class="ms-auto"
+                  t-esc="props.formatCurrency(taxTotals.order_sign * taxTotals.order_total)"/>
+        </div>
+    </t>
+
+    <div class="text-center" style="margin-top: 0.75em;">*** NOT PAID / PRO FORMA ***</div>
+</div>
+        ]]></field>
+    </record>
+</odoo>

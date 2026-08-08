@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_axiom_pos" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.axiom.pos</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='pos_interface_section']" position="inside">
+                <setting string="POS Screen Theme"
+                         help="Background and text for POS layout. Header uses a ~28% thicker mix of those colors. Re-open the POS session after saving."
+                         id="axiom_pos_screen_theme">
+                    <div class="content-group">
+                        <div class="row mt16">
+                            <label string="Background" for="pos_axiom_theme_bg_color" class="col-lg-3 o_light_label"/>
+                            <field name="pos_axiom_theme_bg_color" widget="color" class="col-lg-3"/>
+                        </div>
+                        <div class="row mt16">
+                            <label string="Text" for="pos_axiom_theme_text_color" class="col-lg-3 o_light_label"/>
+                            <field name="pos_axiom_theme_text_color" widget="color" class="col-lg-3"/>
+                        </div>
+                    </div>
+                </setting>
+                <setting string="Product Card Price"
+                         help="Style and position of the price displayed on POS product cards. Background is rendered at 60% opacity. Re-open the POS session after saving."
+                         id="axiom_pos_product_card_price">
+                    <div class="content-group">
+                        <div class="row mt16">
+                            <label string="Background" for="pos_axiom_price_bg_color" class="col-lg-3 o_light_label"/>
+                            <field name="pos_axiom_price_bg_color" widget="color" class="col-lg-3"/>
+                        </div>
+                        <div class="row mt16">
+                            <label string="Text" for="pos_axiom_price_text_color" class="col-lg-3 o_light_label"/>
+                            <field name="pos_axiom_price_text_color" widget="color" class="col-lg-3"/>
+                        </div>
+                        <div class="row mt16">
+                            <label string="Alignment" for="pos_axiom_price_alignment" class="col-lg-3 o_light_label"/>
+                            <field name="pos_axiom_price_alignment" class="col-lg-4"/>
+                        </div>
+                        <div class="row mt16">
+                            <label string="Font Size" for="pos_axiom_price_font_size" class="col-lg-3 o_light_label"/>
+                            <field name="pos_axiom_price_font_size" class="col-lg-3" placeholder="20px"/>
+                        </div>
+                    </div>
+                </setting>
+                <setting string="Product Info / On Hand"
+                         help="Who can open the product info (i) card and see on-hand / warehouse quantities. Everyone includes basic cashiers."
+                         id="axiom_pos_product_info_access">
+                    <div class="content-group">
+                        <div class="row mt16">
+                            <label string="Visible to" for="pos_axiom_product_info_access" class="col-lg-3 o_light_label"/>
+                            <field name="pos_axiom_product_info_access" class="col-lg-4"/>
+                        </div>
+                    </div>
+                </setting>
+                <setting string="Draft Order Receipt Design"
+                         help="Select an XML receipt design (Point of Sale → Configuration → Receipt Designs) for draft / pro forma bills."
+                         id="axiom_draft_receipt_template">
+                    <div class="content-group">
+                        <div class="row mt16">
+                            <label string="Receipt Design" for="pos_axiom_draft_receipt_design_id" class="col-lg-3 o_light_label"/>
+                            <field name="pos_axiom_draft_receipt_design_id" class="col-lg-6"/>
+                        </div>
+                    </div>
+                </setting>
+            </xpath>
+            <xpath expr="//block[@id='pos_bills_and_receipts_section']" position="inside">
+                <setting string="Paid Order Reprinting"
+                         help="Who can reprint paid receipts. Choose No one to disable reprint for everyone."
+                         id="axiom_paid_reprint_access">
+                    <div class="content-group">
+                        <div class="row mt16">
+                            <label string="Allowed for" for="pos_axiom_paid_reprint_access" class="col-lg-3 o_light_label"/>
+                            <field name="pos_axiom_paid_reprint_access" class="col-lg-4"/>
+                        </div>
+                    </div>
+                </setting>
+                <setting string="Apply Axiom Settings to All POS"
+                         help="Copy theme, price badge, draft receipt template, and reprint options from this POS to every other Point of Sale in the company. Enable and Save, or use the button."
+                         id="axiom_apply_to_all_pos">
+                    <div class="content-group">
+                        <div class="row mt16">
+                            <label string="Copy on save" for="pos_axiom_apply_to_all_pos" class="col-lg-3 o_light_label"/>
+                            <field name="pos_axiom_apply_to_all_pos" class="col-lg-3"/>
+                        </div>
+                        <div class="mt16">
+                            <button name="action_axiom_apply_to_all_company_pos"
+                                    type="object"
+                                    string="Apply to all POS now"
+                                    class="btn-primary"
+                                    icon="fa-copy"/>
+                        </div>
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="pos_config_view_form_axiom_pos" model="ir.ui.view">
+        <field name="name">pos.config.form.view.inherit.axiom.pos</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Place Axiom fields in the main settings container (visible when editing a shop). -->
+            <xpath expr="//div[hasclass('o_settings_container')][not(@id='restaurant_on_create')]" position="inside">
+                <setting id="axiom_pos_screen_theme"
+                         string="POS Screen Theme"
+                         help="Re-open the POS session after changing colors.">
+                    <div class="content-group mt16">
+                        <div class="row">
+                            <label for="axiom_theme_bg_color" string="Background" class="col-lg-4 o_light_label"/>
+                            <field name="axiom_theme_bg_color" widget="color" class="col-lg-4"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="axiom_theme_text_color" string="Text" class="col-lg-4 o_light_label"/>
+                            <field name="axiom_theme_text_color" widget="color" class="col-lg-4"/>
+                        </div>
+                    </div>
+                </setting>
+                <setting id="axiom_pos_product_card_price"
+                         string="Product Card Price"
+                         help="Price badge background is shown at 60% opacity.">
+                    <div class="content-group mt16">
+                        <div class="row">
+                            <label for="axiom_price_bg_color" string="Background" class="col-lg-4 o_light_label"/>
+                            <field name="axiom_price_bg_color" widget="color" class="col-lg-4"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="axiom_price_text_color" string="Text" class="col-lg-4 o_light_label"/>
+                            <field name="axiom_price_text_color" widget="color" class="col-lg-4"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="axiom_price_alignment" string="Alignment" class="col-lg-4 o_light_label"/>
+                            <field name="axiom_price_alignment" class="col-lg-6"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="axiom_price_font_size" string="Font Size" class="col-lg-4 o_light_label"/>
+                            <field name="axiom_price_font_size" class="col-lg-4" placeholder="20px"/>
+                        </div>
+                    </div>
+                </setting>
+                <setting id="axiom_product_info_access" string="Product Info / On Hand">
+                    <div class="content-group mt16">
+                        <div class="row">
+                            <label for="axiom_product_info_access" string="Visible to" class="col-lg-4 o_light_label"/>
+                            <field name="axiom_product_info_access" class="col-lg-6"/>
+                        </div>
+                    </div>
+                </setting>
+                <setting id="axiom_draft_receipt_template"
+                         string="Draft Order Receipt Design"
+                         help="Select an XML receipt design for draft / pro forma bills.">
+                    <div class="content-group mt16">
+                        <div class="row">
+                            <label for="axiom_draft_receipt_design_id" string="Receipt Design" class="col-lg-4 o_light_label"/>
+                            <field name="axiom_draft_receipt_design_id" class="col-lg-8"/>
+                        </div>
+                    </div>
+                </setting>
+                <setting id="axiom_paid_reprint_access"
+                         string="Paid Order Reprinting"
+                         help="Who can reprint paid receipts. No one disables reprint for everyone.">
+                    <div class="content-group mt16">
+                        <div class="row">
+                            <label for="axiom_paid_reprint_access" string="Allowed for" class="col-lg-4 o_light_label"/>
+                            <field name="axiom_paid_reprint_access" class="col-lg-6"/>
+                        </div>
+                    </div>
+                </setting>
+                <setting id="axiom_apply_to_all_pos"
+                         string="Apply Axiom Settings to All POS"
+                         help="Copy all Axiom settings from this POS to every other Point of Sale in the company on save, or click the button.">
+                    <div class="content-group mt16">
+                        <div class="row">
+                            <label for="axiom_apply_to_all_pos" string="Copy on save" class="col-lg-4 o_light_label"/>
+                            <field name="axiom_apply_to_all_pos" class="col-lg-4"/>
+                        </div>
+                        <div class="mt8">
+                            <button name="action_axiom_apply_to_all_company_pos"
+                                    type="object"
+                                    string="Apply to all POS now"
+                                    class="btn-primary"
+                                    icon="fa-copy"/>
+                        </div>
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

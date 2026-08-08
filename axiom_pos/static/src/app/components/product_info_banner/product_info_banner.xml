@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="axiom_pos.ProductInfoBanner" t-inherit="point_of_sale.ProductInfoBanner" t-inherit-mode="extension">
+        <!-- Hide on-hand quantity block -->
+        <xpath expr="//span[contains(text(), 'On hand')]/.." position="attributes">
+            <attribute name="t-if">env.services.pos.axiomCashierCanViewProductInfo() and this.props.product.is_storable</attribute>
+        </xpath>
+        <!-- Hide other-warehouse inventory accordion -->
+        <xpath expr="//AccordionItem" position="attributes">
+            <attribute name="t-if">env.services.pos.axiomCashierCanViewProductInfo() and state.other_warehouses.length > 0</attribute>
+        </xpath>
+    </t>
+
+</templates>
